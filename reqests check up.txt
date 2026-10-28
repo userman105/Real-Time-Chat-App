@@ -1,0 +1,39 @@
+🔐 Auth
+
+POST /logout → with Bearer token, check that token becomes invalid.
+
+(Optional) GET /user → return current authenticated user (handy for testing).
+
+💬 Chats
+
+GET /chats → list all chats the logged-in user belongs to.
+
+GET /chats/{chat} → show one chat with its members.
+
+POST /chats/{chat}/join → try joining an existing chat (with admin email logic).
+
+POST /chats/{chat}/add-user-by-email → admin adds a user to chat.
+
+POST /chats/{chat}/leave → leave a chat.
+
+📨 Messages (if you already set up)
+
+POST /chats/{chat}/messages → send a message to a chat.
+
+GET /chats/{chat}/messages → fetch messages for a chat.
+
+👤 Users
+
+GET /users?search=email → useful if you want to support searching users to invite them.
+
+(Optional) GET /users/online → later, when you add presence tracking (via Node.js / Redis).
+
+👉 By testing these in Insomnia you’ll confirm:
+
+🔑 Auth flow works (register → login → logout).
+
+🛠️ Chat CRUD works.
+
+👥 Membership logic works (joining, leaving, inviting).
+
+📨 Messaging endpoints work (when you add them).

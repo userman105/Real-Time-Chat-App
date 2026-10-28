@@ -1,0 +1,106 @@
+Step 1: Prepare Your Laravel App
+
+Make sure your API is running:
+
+php artisan serve
+
+
+By default it runs at:
+
+http://127.0.0.1:8000
+
+Step 2: Create a New Workspace in Insomnia
+
+Open Insomnia.
+
+Create a new Collection / Workspace (e.g. “Chat App API”).
+
+Add an environment with:
+
+{
+  "base_url": "http://127.0.0.1:8000"
+}
+
+Step 3: Test Register Endpoint
+
+POST → {{ base_url }}/api/register
+
+Body → JSON →
+
+{
+  "name": "Alice",
+  "email": "alice@example.com",
+  "password": "password123"
+}
+
+
+Expected: returns user object + token.
+Save that token somewhere (you’ll need it).
+
+Step 4: Test Login Endpoint
+
+POST → {{ base_url }}/api/login
+
+Body → JSON →
+
+{
+  "email": "alice@example.com",
+  "password": "password123"
+}
+
+
+Expected: returns user object + token.
+
+Copy the token.
+
+Step 5: Use Token in Authenticated Requests
+
+In Insomnia, go to Headers.
+
+Add:
+
+Authorization: Bearer <paste_token_here>
+
+
+Now all protected routes will work.
+
+Step 6: Test Create Chat
+
+POST → {{ base_url }}/api/chats
+
+Body → JSON →
+
+{
+  "name": "Test Chat",
+  "type": "group"
+}
+
+
+Expected: returns the new chat object.
+
+Step 7: Test Send Message
+
+POST → {{ base_url }}/api/chats/{chat_id}/messages
+
+Body → JSON →
+
+{
+  "content": "Hello world!"
+}
+
+
+Expected: returns created message with id, user_id, chat_id, content.
+
+Step 8: Test List Messages
+
+GET → {{ base_url }}/api/chats/{chat_id}/messages
+
+Expected: array of messages in that chat.
+
+Step 9: Test Authorization Errors
+
+Try sending a message to a chat you’re not a member of.
+
+You should get:
+
+{ "error": "Forbidden" }
